@@ -14,7 +14,10 @@ stages {
             steps {
                 script {
                 sh '''
-                 docker rm -f jenkins
+                 docker rm -f $DOCKER_IMAGE_CAST
+                 docker rm -f $DOCKER_IMAGE_CAST_DB
+                 docker rm -f $DOCKER_IMAGE_MOVIE
+                 docker rm -f $DOCKER_IMAGE_MOVIE_DB
                  docker build -t $DOCKER_ID/$DOCKER_IMAGE_CAST:$DOCKER_TAG ./microservices/cast
                  docker build -t $DOCKER_ID/$DOCKER_IMAGE_CAST_DB:$DOCKER_TAG ./microservices/cast-db
                  docker build -t $DOCKER_ID/$DOCKER_IMAGE_MOVIE:$DOCKER_TAG ./microservices/movie
