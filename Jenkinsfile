@@ -32,7 +32,7 @@ stages {
                     script {
                     sh '''
                     docker run -d -p 8002:8000 --name $DOCKER_IMAGE_CAST $DOCKER_ID/$DOCKER_IMAGE_CAST:$DOCKER_TAG
-                    docker run -d -p 81:5432--name $DOCKER_IMAGE_CAST_DB $DOCKER_ID/$DOCKER_IMAGE_CAST_DB:$DOCKER_TAG
+                    docker run -d -p 81:5432 --name $DOCKER_IMAGE_CAST_DB $DOCKER_ID/$DOCKER_IMAGE_CAST_DB:$DOCKER_TAG
                     docker run -d -p 8001:8000 --name $DOCKER_IMAGE_MOVIE $DOCKER_ID/$DOCKER_IMAGE_MOVIE:$DOCKER_TAG
                     docker run -d -p 83:5432 --name $DOCKER_IMAGE_MOVIE_DB $DOCKER_ID/$DOCKER_IMAGE_MOVIE_DB:$DOCKER_TAG
                     sleep 10
