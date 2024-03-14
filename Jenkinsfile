@@ -88,19 +88,19 @@ stage('Deploiement en dev'){
                 cp microservices/movie/movie/values.yaml values_movie.yml
                 cat values_movie.yml
                 sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values_movie.yml
-                helm upgrade --install movie-chart ./movie --values=values_movie.yml --namespace dev
+                helm upgrade --install movie-chart ./microservices/movie --values=values_movie.yml --namespace dev
                 cp microservices/movie-db/movie-db/values.yaml values_movie-db.yml
                 cat values_movie-db.yml
                 sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values_movie-db.yml
-                helm upgrade --install movie-db-chart ./movie-db --values=values_movie-db.yml --namespace dev
+                helm upgrade --install movie-db-chart ./microservices/movie-db --values=values_movie-db.yml --namespace dev
                 cp microservices/cast/cast/values.yaml values_cast.yml
                 cat values_cast.yml
                 sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values_cast.yml
-                helm upgrade --install cast-chart ./cast --values=values_cast.yml --namespace dev
+                helm upgrade --install cast-chart ./microservices/cast --values=values_cast.yml --namespace dev
                 cp microservices/cast-db/cast-db/values.yaml values_cast-db.yml
                 cat values_cast-db.yml
                 sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values_cast-db.yml
-                helm upgrade --install cast-db-chart ./cast-db --values=values_cast-db.yml --namespace dev
+                helm upgrade --install cast-db-chart ./microservices/cast-db --values=values_cast-db.yml --namespace dev
                 '''
                 }
             }
@@ -121,19 +121,19 @@ stage('Deploiement en QA'){
                 cp microservices/movie/movie/values.yaml values_movie.yml
                 cat values_movie.yml
                 sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values_movie.yml
-                helm upgrade --install movie-chart ./movie --values=values_movie.yml --namespace QA
+                helm upgrade --install movie-chart ./microservices/movie --values=values_movie.yml --namespace QA
                 cp microservices/movie-db/movie-db/values.yaml values_movie-db.yml
                 cat values_movie-db.yml
                 sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values_movie-db.yml
-                helm upgrade --install movie-db-chart ./movie-db --values=values_movie-db.yml --namespace QA
+                helm upgrade --install movie-db-chart ./microservices/movie-db --values=values_movie-db.yml --namespace QA
                 cp microservices/cast/cast/values.yaml values_cast.yml
                 cat values_cast.yml
                 sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values_cast.yml
-                helm upgrade --install cast-chart ./cast --values=values_cast.yml --namespace QA
+                helm upgrade --install cast-chart ./microservices/cast --values=values_cast.yml --namespace QA
                 cp microservices/cast-db/cast-db/values.yaml values_cast-db.yml
                 cat values_cast-db.yml
                 sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values_cast-db.yml
-                helm upgrade --install cast-db-chart ./cast-db --values=values_cast-db.yml --namespace QA
+                helm upgrade --install cast-db-chart ./microservices/cast-db --values=values_cast-db.yml --namespace QA
                 '''
                 }
             }
@@ -154,19 +154,19 @@ stage('Deploiement en staging'){
                 cp microservices/movie/movie/values.yaml values_movie.yml
                 cat values_movie.yml
                 sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values_movie.yml
-                helm upgrade --install movie-chart ./movie --values=values_movie.yml --namespace staging
+                helm upgrade --install movie-chart ./microservices/movie --values=values_movie.yml --namespace staging
                 cp microservices/movie-db/movie-db/values.yaml values_movie-db.yml
                 cat values_movie-db.yml
                 sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values_movie-db.yml
-                helm upgrade --install movie-db-chart ./movie-db --values=values_movie-db.yml --namespace staging
+                helm upgrade --install movie-db-chart ./microservices/movie-db --values=values_movie-db.yml --namespace staging
                 cp microservices/cast/cast/values.yaml values_cast.yml
                 cat values_cast.yml
                 sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values_cast.yml
-                helm upgrade --install cast-chart ./cast --values=values_cast.yml --namespace staging
+                helm upgrade --install cast-chart ./microservices/cast --values=values_cast.yml --namespace staging
                 cp microservices/cast-db/cast-db/values.yaml values_cast-db.yml
                 cat values_cast-db.yml
                 sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values_cast-db.yml
-                helm upgrade --install cast-db-chart ./cast-db --values=values_cast-db.yml --namespace staging
+                helm upgrade --install cast-db-chart ./microservices/cast-db --values=values_cast-db.yml --namespace staging
                 '''
                 }
             }
@@ -193,19 +193,19 @@ stage('Deploiement en staging'){
                 cp microservices/movie/movie/values.yaml values_movie.yml
                 cat values_movie.yml
                 sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values_movie.yml
-                helm upgrade --install movie-chart ./movie --values=values_movie.yml --namespace prod
+                helm upgrade --install movie-chart ./microservices/movie --values=values_movie.yml --namespace prod
                 cp microservices/movie-db/movie-db/values.yaml values_movie-db.yml
                 cat values_movie-db.yml
                 sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values_movie-db.yml
-                helm upgrade --install movie-db-chart ./movie-db --values=values_movie-db.yml --namespace prod
+                helm upgrade --install movie-db-chart ./microservices/movie-db --values=values_movie-db.yml --namespace prod
                 cp microservices/cast/cast/values.yaml values_cast.yml
                 cat values_cast.yml
                 sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values_cast.yml
-                helm upgrade --install cast-chart ./cast --values=values_cast.yml --namespace prod
+                helm upgrade --install cast-chart ./microservices/cast --values=values_cast.yml --namespace prod
                 cp microservices/cast-db/cast-db/values.yaml values_cast-db.yml
                 cat values_cast-db.yml
                 sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values_cast-db.yml
-                helm upgrade --install cast-db-chart ./cast-db --values=values_cast-db.yml --namespace prod
+                helm upgrade --install cast-db-chart ./microservices/cast-db --values=values_cast-db.yml --namespace prod
                 '''
                 }
             }
