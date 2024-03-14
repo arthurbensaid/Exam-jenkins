@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Release.Name }}-helm
+  labels:
+    app: {{ .Release.Name }}-helm
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-helm
+  serviceName: {{ .Release.Name }}-helm
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-helm
+    spec:
+      containers:
+        - name:     {{ .Release.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.targetPort }}
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - name: helm-volume
+              mountPath: /var/lib/postgresql/data/
+          env:
+            - name: "POSTGRES_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  key:  password
+                  name: {{ .Release.Name }}-helm
+            - name: POSTGRES_USER
+              value: {{ .Values.postgres_user }}
+            - name: POSTGRES_DB
+              value: {{ .Values.postgres_db }}
+            - name: POSTGRES_PASSWORD
+              value: {{ .Values.postgres_password }}
+      volumes:
+        - name: helm-volume
+        - name: helm-volume
+          emptyDir: {}

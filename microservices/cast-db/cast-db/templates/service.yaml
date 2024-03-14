@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-helm
+  labels:
+    app: {{ .Release.Name }}-helm
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: 5432
+  selector:
+    app: {{ .Release.Name }}-helm
