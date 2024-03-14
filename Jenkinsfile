@@ -16,7 +16,9 @@ stages {
                 sh '''
                  docker rm -f jenkins
                  docker build -t $DOCKER_ID/$DOCKER_IMAGE_CAST:$DOCKER_TAG ./microservices/cast
+                 docker build -t $DOCKER_ID/$DOCKER_IMAGE_CAST_DB:$DOCKER_TAG ./microservices/cast-db
                  docker build -t $DOCKER_ID/$DOCKER_IMAGE_MOVIE:$DOCKER_TAG ./microservices/movie
+                 docker build -t $DOCKER_ID/$DOCKER_IMAGE_MOVIE_DB:$DOCKER_TAG ./microservices/movie-db
                 sleep 6
                 '''
                 }
@@ -27,7 +29,9 @@ stages {
                     script {
                     sh '''
                     docker run -d -p 8002:8000 --name $DOCKER_IMAGE_CAST $DOCKER_ID/$DOCKER_IMAGE_CAST:$DOCKER_TAG
+                    docker run -d -p 81:5432--name $DOCKER_IMAGE_CAST_DB $DOCKER_ID/$DOCKER_IMAGE_CAST_DB:$DOCKER_TAG
                     docker run -d -p 8001:8000 --name $DOCKER_IMAGE_MOVIE $DOCKER_ID/$DOCKER_IMAGE_MOVIE:$DOCKER_TAG
+                    docker run -d -p 83:5432 --name $DOCKER_IMAGE_MOVIE_DB $DOCKER_ID/$DOCKER_IMAGE_MOVIE_DB:$DOCKER_TAG
                     sleep 10
                     '''
                     }
@@ -41,6 +45,27 @@ stages {
                     curl localhost:8002
                     '''
                     }
+            }
+
+        }
+        stage('Docker Push'){ //we pass the built image to our docker hub account
+            environment
+            {
+                DOCKER_PASS = credentials("DOCKER_HUB_PASS") // we retrieve  docker password from secret text called docker_hub_pass saved on jenkins
+            }
+
+            steps {
+
+                script {
+                sh '''
+                docker login -u $DOCKER_ID -p $DOCKER_PASS
+                docker push $DOCKER_ID/$DOCKER_IMAGE_CAST:$DOCKER_TAG
+                docker push $DOCKER_ID/$DOCKER_IMAGE_CAST:$DOCKER_TAG
+                docker push $DOCKER_ID/$DOCKER_IMAGE_CAST_DB:$DOCKER_TAG
+                docker push $DOCKER_ID/$DOCKER_IMAGE_MOVIE:$DOCKER_TAG
+                docker push $DOCKER_ID/$DOCKER_IMAGE_MOVIE_DB:$DOCKER_TAG
+                '''
+                }
             }
 
         }
