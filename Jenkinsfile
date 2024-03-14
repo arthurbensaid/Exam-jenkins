@@ -1,6 +1,7 @@
 pipeline {
 environment { // Declaration of environment variables
 DOCKER_ID = "arthurbensaid"
+DOCKER_IMAGE_NGINX = "exam-jenkins"
 DOCKER_IMAGE_CAST = "cast"
 DOCKER_IMAGE_CAST_DB = "cast-db"
 DOCKER_IMAGE_MOVIE = "movie"
@@ -27,10 +28,10 @@ stages {
                 steps {
                     script {
                     sh '''
-                    docker run -d -p 8002:8000 --name jenkins $DOCKER_ID/$DOCKER_IMAGE_CAST:$DOCKER_TAG
-                    docker run -d -p 81:5432--name jenkins $DOCKER_ID/$DOCKER_IMAGE_CAST_DB:$DOCKER_TAG
-                    docker run -d -p 8001:8000 --name jenkins $DOCKER_ID/$DOCKER_IMAGE_MOVIE:$DOCKER_TAG
-                    docker run -d -p 83:5432 --name jenkins $DOCKER_ID/$DOCKER_IMAGE_MOVIE_DB:$DOCKER_TAG
+                    docker run -d -p 8002:8000 --name $DOCKER_IMAGE_CAST $DOCKER_ID/$DOCKER_IMAGE_CAST:$DOCKER_TAG
+                    docker run -d -p 81:5432--name $DOCKER_IMAGE_CAST_DB $DOCKER_ID/$DOCKER_IMAGE_CAST_DB:$DOCKER_TAG
+                    docker run -d -p 8001:8000 --name $DOCKER_IMAGE_MOVIE $DOCKER_ID/$DOCKER_IMAGE_MOVIE:$DOCKER_TAG
+                    docker run -d -p 83:5432 --name $DOCKER_IMAGE_MOVIE_DB $DOCKER_ID/$DOCKER_IMAGE_MOVIE_DB:$DOCKER_TAG
                     sleep 10
                     '''
                     }
@@ -41,10 +42,7 @@ stages {
             steps {
                     script {
                     sh '''
-                    curl localhost:8001
                     curl localhost:8002
-                    curl localhost:81
-                    curl localhost:83
                     '''
                     }
             }
@@ -61,6 +59,7 @@ stages {
                 script {
                 sh '''
                 docker login -u $DOCKER_ID -p $DOCKER_PASS
+                docker push $DOCKER_ID/$DOCKER_IMAGE_CAST:$DOCKER_TAG
                 docker push $DOCKER_ID/$DOCKER_IMAGE_CAST:$DOCKER_TAG
                 docker push $DOCKER_ID/$DOCKER_IMAGE_CAST_DB:$DOCKER_TAG
                 docker push $DOCKER_ID/$DOCKER_IMAGE_MOVIE:$DOCKER_TAG
@@ -209,3 +208,6 @@ stage('Deploiement en staging'){
             }
 
         }
+
+}
+}
