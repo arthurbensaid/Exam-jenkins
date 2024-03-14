@@ -106,7 +106,7 @@ stage('Deploiement en dev'){
             }
 
         }
-stage('Deploiement en QA'){
+stage('Deploiement en qa'){
         environment
         {
         KUBECONFIG = credentials("config") // we retrieve  kubeconfig from secret file called config saved on jenkins
@@ -121,19 +121,19 @@ stage('Deploiement en QA'){
                 cp microservices/movie/movie/values.yaml values_movie.yml
                 cat values_movie.yml
                 sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values_movie.yml
-                helm upgrade --install movie-chart ./microservices/movie/movie --values=values_movie.yml --namespace QA
+                helm upgrade --install movie-chart ./microservices/movie/movie --values=values_movie.yml --namespace qa
                 cp microservices/movie-db/movie-db/values.yaml values_movie-db.yml
                 cat values_movie-db.yml
                 sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values_movie-db.yml
-                helm upgrade --install movie-db-chart ./microservices/movie-db/movie-db --values=values_movie-db.yml --namespace QA
+                helm upgrade --install movie-db-chart ./microservices/movie-db/movie-db --values=values_movie-db.yml --namespace qa
                 cp microservices/cast/cast/values.yaml values_cast.yml
                 cat values_cast.yml
                 sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values_cast.yml
-                helm upgrade --install cast-chart ./microservices/cast/cast --values=values_cast.yml --namespace QA
+                helm upgrade --install cast-chart ./microservices/cast/cast --values=values_cast.yml --namespace qa
                 cp microservices/cast-db/cast-db/values.yaml values_cast-db.yml
                 cat values_cast-db.yml
                 sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values_cast-db.yml
-                helm upgrade --install cast-db-chart ./microservices/cast-db/cast-db --values=values_cast-db.yml --namespace QA
+                helm upgrade --install cast-db-chart ./microservices/cast-db/cast-db --values=values_cast-db.yml --namespace qa
                 '''
                 }
             }
